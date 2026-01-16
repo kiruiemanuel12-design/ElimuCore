@@ -1,77 +1,59 @@
-# 🚀 ElimuCore Deployment - Quick Summary
+# 🚀 ElimuCore on AWS - Deployment Guide
 
 ## ✅ What's Been Done
 
-Your ElimuCore SMIS has been **completely separated into frontend and backend** with full deployment procedures.
+Your ElimuCore SMIS has been **fully configured for AWS deployment** with complete documentation and all Railway deployment files removed.
 
 ---
 
-## 📁 New Structure
+## 📁 Project Structure
 
 ```
 ElimuCore/
 ├── backend/              ← Laravel REST API (Port 8000)
 ├── frontend/             ← Vue 3 SPA (Port 5173)
-├── docker-compose.yml    ← One-command Docker deployment
-├── nginx.conf            ← Web server config
-└── [Documentation files]
+├── docker-compose.yml    ← AWS-compatible Docker deployment
+├── nginx.conf            ← Production web server config
+└── [AWS Documentation]
 ```
 
 ---
 
-## ⚡ 3 Ways to Deploy
+## 🚀 Deployment to AWS (Free Tier)
 
-### 1️⃣ **Docker (Easiest - Recommended)**
-```bash
-docker-compose up -d
-# Then access http://localhost
-```
-**Time:** 5 minutes | **Complexity:** Low | **Best for:** Testing, Development, Production
-
----
-
-### 2️⃣ **Local Development**
-```bash
-# Terminal 1 - Backend
-cd backend && cp .env.example .env && composer install && php artisan migrate && php artisan serve
-
-# Terminal 2 - Frontend  
-cd frontend && cp .env.example .env && npm install && npm run dev
-```
-**Time:** 10 minutes | **Complexity:** Low | **Best for:** Development
-
----
-
-### 3️⃣ **Server/VPS Deployment**
-```bash
-# Backend setup
-cd /var/www/elimucore/backend
-composer install --optimize-autoloader --no-dev
-cp .env.example .env
-# Configure .env with your database details
-php artisan migrate --force
-php artisan db:seed --force
-
-# Frontend build
-cd /var/www/elimucore/frontend
-npm install
-npm run build
-
-# Configure Nginx with provided templates
-# Enable SSL with Let's Encrypt
-```
-**Time:** 30 minutes | **Complexity:** Medium | **Best for:** Production
-
----
-
-## 📄 Documentation Files
+### 📚 Documentation Files
 
 | File | Purpose | Read Time |
 |------|---------|-----------|
-| **QUICK_DEPLOYMENT.md** | Fast 3-step deployment | 5 min |
-| **DEPLOYMENT_GUIDE.md** | Complete deployment procedures | 20 min |
+| **AWS_DEPLOYMENT_GUIDE.md** | Complete step-by-step AWS setup | 25 min |
+| **QUICK_DEPLOYMENT.md** | Fast 3-step local Docker test | 5 min |
+| **DEPLOYMENT_GUIDE.md** | Complete manual procedures | 20 min |
 | **API_DOCUMENTATION.md** | All API endpoints (35+) | 15 min |
 | **ROOT_README.md** | Full architecture overview | 10 min |
+
+---
+
+### 🎯 Quick Start (AWS)
+
+**👉 START HERE:** Read [AWS_DEPLOYMENT_GUIDE.md](AWS_DEPLOYMENT_GUIDE.md) for complete AWS setup
+
+Summary of AWS deployment:
+1. **Create AWS Free Tier Account** (12 months free)
+2. **Launch EC2 Instance** (t2.micro - free)
+3. **Create RDS MySQL Database** (db.t2.micro - free)
+4. **Install Docker on EC2**
+5. **Deploy with docker-compose**
+6. **Configure Domain & HTTPS** (optional, with Let's Encrypt)
+
+### ✨ AWS Free Tier Benefits
+
+✅ **EC2**: t2.micro (750 hours/month ≈ 24/7 for one instance)  
+✅ **RDS MySQL**: db.t2.micro (750 hours/month)  
+✅ **Elastic IP**: 1 static IP address (free)  
+✅ **Data Transfer**: 1 GB outbound/month  
+✅ **30 GB Storage**: EBS volume  
+
+**Total Cost: $0/month for 12 months** (then ~$24/month after free tier ends)
 
 ---
 
@@ -85,30 +67,26 @@ After deployment, login with:
 
 ## 🎯 Next Steps
 
-### For Docker Deployment
+### For AWS Deployment (Recommended)
+👉 **Follow [AWS_DEPLOYMENT_GUIDE.md](AWS_DEPLOYMENT_GUIDE.md)** step-by-step
+- Takes ~1 hour
+- Free for 12 months
+- Production-ready infrastructure
+
+### For Local Testing (Before AWS)
 ```bash
-# 1. Navigate to project
 cd /workspaces/ElimuCore
-
-# 2. Start all services
 docker-compose up -d
-
-# 3. Access
-# Frontend: http://localhost
+# Access: http://localhost
 # API: http://localhost:8000/api
 ```
 
-### For Server Deployment
+### For Traditional Server/VPS Deployment
 1. Read [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)
 2. Follow Backend Setup section
 3. Follow Frontend Setup section
 4. Configure Nginx with provided templates
 5. Setup HTTPS with Let's Encrypt
-
-### For Development
-1. Navigate to backend and run `php artisan serve`
-2. Navigate to frontend and run `npm run dev`
-3. Frontend will proxy API requests to backend
 
 ---
 
@@ -220,17 +198,20 @@ Ready to add:
 ## 🚀 Deployment Flowchart
 
 ```
-START
+START: Deploy ElimuCore
   ↓
-[Choose Deployment Method]
-  ├→ Docker? → docker-compose up -d → DONE ✅
-  ├→ Local Dev? → npm run dev + php artisan serve → DONE ✅
-  └→ Server? → Read DEPLOYMENT_GUIDE.md → Follow steps → DONE ✅
+Choose Your Path:
+  ├→ AWS (Recommended) → AWS_DEPLOYMENT_GUIDE.md → Free for 12 months ✅
+  ├→ Local Testing → docker-compose up -d → 5 minutes ✅
+  └→ Traditional Server → DEPLOYMENT_GUIDE.md → Any VPS ✅
 ```
 
 ---
 
 ## 📞 Troubleshooting
+
+**AWS setup issues?**
+→ Check [AWS_DEPLOYMENT_GUIDE.md](AWS_DEPLOYMENT_GUIDE.md#troubleshooting)
 
 **Docker won't start?**
 ```bash
@@ -250,8 +231,6 @@ docker-compose exec backend php artisan migrate
 # Verify VITE_API_BASE_URL in frontend/.env
 ```
 
-See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md#troubleshooting) for more help.
-
 ---
 
 ## 📊 Project Statistics
@@ -267,20 +246,22 @@ See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md#troubleshooting) for more help.
 
 ## 🎉 You're Ready!
 
-The system is:
-✅ Fully separated (frontend & backend)
-✅ Documented (4 deployment guides)
-✅ Containerized (Docker ready)
-✅ Optimized (production configuration)
-✅ Tested (seed data provided)
+The system is fully configured for AWS deployment:
+✅ Separated backend & frontend
+✅ Docker containerized
+✅ AWS-ready configuration
+✅ Production-grade documentation
+✅ Free Tier eligible
+✅ Complete with seed data
 
-**Start with:** `docker-compose up -d`
+**Start with:** [AWS_DEPLOYMENT_GUIDE.md](AWS_DEPLOYMENT_GUIDE.md)
 
 ---
 
 **Questions?** Check the detailed docs:
-- [QUICK_DEPLOYMENT.md](QUICK_DEPLOYMENT.md) - Start here
-- [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) - Complete reference
-- [API_DOCUMENTATION.md](API_DOCUMENTATION.md) - API details
-- [ROOT_README.md](ROOT_README.md) - Full overview
+- [AWS_DEPLOYMENT_GUIDE.md](AWS_DEPLOYMENT_GUIDE.md) - AWS setup (25 min)
+- [QUICK_DEPLOYMENT.md](QUICK_DEPLOYMENT.md) - Quick local test (5 min)
+- [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) - Manual server setup (20 min)
+- [API_DOCUMENTATION.md](API_DOCUMENTATION.md) - API details (15 min)
+- [ROOT_README.md](ROOT_README.md) - Full overview (10 min)
 

@@ -1,5 +1,19 @@
 # ElimuCore SMIS - Complete Deployment Guide
 
+## ⚠️ NOTE: AWS Deployment Recommended
+
+**For production deployment, use [AWS_DEPLOYMENT_GUIDE.md](AWS_DEPLOYMENT_GUIDE.md)** 
+- Free for 12 months on AWS Free Tier
+- Complete setup with EC2 + RDS
+- Production-ready infrastructure
+
+**This guide is for:**
+- Manual VPS/Server deployment
+- Traditional on-premise installations
+- Development environment setup
+
+---
+
 ## Project Structure
 
 ```

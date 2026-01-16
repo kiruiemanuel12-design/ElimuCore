@@ -1,20 +1,20 @@
-# ElimuCore SMIS - Complete Navigation Guide
+# ElimuCore SMIS - AWS Deployment Navigation
 
 ## 🎯 Start Here (Pick Your Path)
 
-### ⚡ I want to deploy NOW (5 minutes)
-→ Read **[START_HERE.md](START_HERE.md)**  
-→ Then run: `docker-compose up -d`  
+### 🚀 I want to deploy to AWS (FREE!)
+→ Read **[AWS_DEPLOYMENT_GUIDE.md](AWS_DEPLOYMENT_GUIDE.md)**  
+→ Step-by-step AWS setup (25 minutes)  
+→ Free for 12 months on AWS Free Tier  
+
+### ⚡ I want to test locally first (5 minutes)
+→ Run: `docker-compose up -d`  
 → Access: http://localhost  
+→ Then follow AWS guide for production  
 
 ### 📖 I want step-by-step instructions
 → Read **[QUICK_DEPLOYMENT.md](QUICK_DEPLOYMENT.md)** (5 min read)  
-→ Choose deployment method (Docker, Local, or Server)  
-→ Follow the steps  
-
-### 🔧 I'm deploying to a server/VPS
-→ Read **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** (20 min read)  
-→ Complete guides for Nginx, HTTPS, Database, Backups  
+→ Quick local Docker deployment  
 
 ### 🏗️ I want to understand the architecture
 → Read **[ROOT_README.md](ROOT_README.md)** (10 min read)  
@@ -24,9 +24,13 @@
 → Read **[API_DOCUMENTATION.md](API_DOCUMENTATION.md)** (15 min read)  
 → All 35+ endpoints with request/response examples  
 
-### ✅ I want a checklist
+### ✅ I want a security checklist
 → Read **[DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)**  
-→ Pre-deployment & security checks  
+→ Pre-deployment & AWS security checks  
+
+### 🔧 I'm deploying to a traditional server/VPS (not AWS)
+→ Read **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** (20 min read)  
+→ Complete guides for Nginx, HTTPS, Database, Backups  
 
 ---
 
@@ -34,15 +38,15 @@
 
 ```
 /workspaces/ElimuCore/
-├── backend/                    ← Laravel API (82MB, ready)
+├── backend/                    ← Laravel API (ready)
 │   ├── app/                   Models, Controllers, Middleware
 │   ├── config/                Configuration files
 │   ├── database/              18 migrations ready
 │   ├── routes/                35+ API routes
-│   ├── .env.example           Copy and configure
+│   ├── .env.example           Copy and configure for AWS
 │   └── artisan               Laravel command
 │
-├── frontend/                   ← Vue 3 App (52KB, ready)
+├── frontend/                   ← Vue 3 App (ready)
 │   ├── src/
 │   │   ├── main.js           App entry
 │   │   ├── App.vue           Root component
@@ -51,51 +55,43 @@
 │   │   └── api.js            Axios client
 │   ├── index.html            HTML template
 │   ├── package.json          Dependencies
-│   ├── .env.example          Copy and configure
+│   ├── .env.example          Copy and configure for AWS
 │   └── vite.config.js        Build config
 │
-├── docker-compose.yml          One-command deploy
+├── docker-compose.yml          AWS-compatible deployment
 ├── Dockerfile.backend          Backend container
 ├── Dockerfile.frontend         Frontend container
-├── nginx.conf                  Web server config
+├── nginx.conf                  Production web server config
 │
-└── 📚 DOCUMENTATION FILES (9 total)
-    ├── START_HERE.md           ⭐ Read this first!
-    ├── QUICK_DEPLOYMENT.md     3-step guide (5 min)
-    ├── DEPLOYMENT_GUIDE.md     Complete manual (20 min)
+└── 📚 DOCUMENTATION (AWS-Focused)
+    ├── AWS_DEPLOYMENT_GUIDE.md ⭐ START HERE FOR PRODUCTION!
+    ├── START_HERE.md           Quick overview & AWS info
+    ├── QUICK_DEPLOYMENT.md     3-step local guide (5 min)
+    ├── DEPLOYMENT_GUIDE.md     Manual server setup
     ├── DEPLOYMENT_CHECKLIST.md Security checklist
     ├── API_DOCUMENTATION.md    All endpoints
     ├── ROOT_README.md          Full architecture
-    ├── PROJECT_COMPLETION_REPORT.md System overview
-    ├── README.md               Laravel README
-    └── QUICK_START.md          Dev setup
+    └── README.md               Laravel info
 ```
 
 ---
 
 ## 🚀 Quick Commands
 
-### Docker Deployment (Easiest)
+### Deploy to AWS
+```
+Follow [AWS_DEPLOYMENT_GUIDE.md](AWS_DEPLOYMENT_GUIDE.md)
+Step-by-step guide for EC2 + RDS + Docker deployment
+```
+
+### Test Locally with Docker
 ```bash
 cd /workspaces/ElimuCore
 docker-compose up -d
 # Access: http://localhost
 ```
 
-### Local Development
-```bash
-# Terminal 1
-cd /workspaces/ElimuCore/backend
-php artisan serve
-
-# Terminal 2
-cd /workspaces/ElimuCore/frontend
-npm install
-npm run dev
-# Access: http://localhost:5173
-```
-
-### Server Deployment
+### Manual Server Deployment
 See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md#manual-deployment-vpsserver)
 
 ---
