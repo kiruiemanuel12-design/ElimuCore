@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: elimucore-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: elimucore
+      MYSQL_USER: elimucore_user
+      MYSQL_PASSWORD: elimucore_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - elimucore-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: elimucore-api
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: production
+      APP_DEBUG: false
+      APP_URL: http://localhost:8000
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: elimucore
+      DB_USERNAME: elimucore_user
+      DB_PASSWORD: elimucore_password
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend/storage:/app/storage
+    networks:
+      - elimucore-network
+    command: php artisan serve --host=0.0.0.0 --port=8000
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: elimucore-web
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000/api
+    depends_on:
+      - backend
+    networks:
+      - elimucore-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: elimucore-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - elimucore-network
+
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  elimucore-network:
+    driver: bridge
